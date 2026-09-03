@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- Electron runs a JIT and maps writable-executable pages, both of which the
+       hardened runtime blocks by default. Without these three the signed app
+       crashes on launch rather than failing gracefully. -->
+  <key>com.apple.security.cs.allow-jit</key>
+  <true/>
+  <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+  <true/>
+  <key>com.apple.security.cs.allow-dyld-environment-variables</key>
+  <true/>
+
+  <!-- No mic/camera entitlements here (unlike pulsevoice-desktop) — this app
+       carries no WebRTC audio, control-surface only. -->
+</dict>
+</plist>

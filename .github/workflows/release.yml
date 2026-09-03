@@ -1,0 +1,116 @@
+name: Build & publish desktop installers
+
+# Builds the PulseConnect desktop app for Windows, macOS, and Linux on
+# GitHub's runners (which have the privileges electron-builder needs — local
+# Windows builds fail on the winCodeSign symlink step) and publishes them as
+# public release assets with stable names.
+#
+# Ported from pulsevoice-desktop's own release.yml — same signing pipeline
+# (Azure Artifact Signing for Windows, Apple notarization for macOS), reused
+# as-is since both are org-wide infrastructure, not per-app. The one thing
+# NOT copied automatically: the actual GitHub Actions secrets below
+# (APPLE_*, AZURE_*, MAC_CSC_*) live in pulsevoice-desktop's repo settings —
+# this repo needs its own copies configured before a real signed build will
+# work. Until then this still builds successfully, just unsigned.
+#
+# Pull requests build the same matrix but never publish, so config changes are
+# proven on all three platforms before a tag is cut.
+
+on:
+  # Dry runs default to ON so a stray dispatch can never overwrite a published
+  # release's assets. Untick it only when you actually mean to publish.
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Build only — do not publish a release'
+        type: boolean
+        default: true
+  push:
+    tags: ['v*']
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+
+      # Notarization accepts either an App Store Connect API key or an Apple ID
+      # + app-specific password. The API key is preferred for CI (not tied to a
+      # personal login or 2FA), so stage it when present; @electron/notarize
+      # picks it over the Apple ID path automatically. APPLE_API_KEY must be a
+      # FILE PATH, not the key contents, hence writing it to disk here.
+      - name: Stage App Store Connect API key (macOS, optional)
+        shell: bash
+        run: |
+          if [ -n "$APPLE_API_KEY_B64" ]; then
+            mkdir -p "$HOME/private_keys"
+            printf '%s' "$APPLE_API_KEY_B64" | base64 -d > "$HOME/private_keys/AuthKey.p8"
+            echo "APPLE_API_KEY=$HOME/private_keys/AuthKey.p8" >> "$GITHUB_ENV"
+            echo "Staged App Store Connect API key for notarization."
+          fi
+        env:
+          APPLE_API_KEY_B64: ${{ matrix.os == 'macos-latest' && secrets.APPLE_API_KEY_B64 || '' }}
+
+      - name: Build & publish installer
+        # Publishes only on a tag, or on a dispatch with dry_run unticked. PRs
+        # and dry runs build to prove the config without touching a release.
+        # Notarization is opt-in on the presence of a signing cert, so unsigned
+        # builds keep working until the Developer ID cert is in place.
+        #
+        # NOTE a dry run is the ONLY way to exercise signing before tagging:
+        # electron-builder force-skips code signing on pull_request builds, so a
+        # green PR proves nothing about the certificate.
+        run: npx electron-builder --publish ${{ (github.event_name == 'pull_request' || inputs.dry_run) && 'never' || 'always' }} ${{ (matrix.os == 'macos-latest' && secrets.MAC_CSC_LINK != '') && '--config.mac.notarize=true' || '' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # macOS signing turns itself on the moment MAC_CSC_LINK exists. Until
+          # then auto-discovery stays off so the build produces an (unsigned)
+          # installer instead of failing. Windows signs explicitly via
+          # win.azureSignOptions in package.json (Azure Artifact Signing),
+          # which ignores this flag.
+          CSC_IDENTITY_AUTO_DISCOVERY: ${{ matrix.os == 'macos-latest' && secrets.MAC_CSC_LINK != '' }}
+          # Scoped to macOS on purpose: a bare CSC_LINK would make Windows try
+          # to sign with the Apple cert instead of using Azure.
+          CSC_LINK: ${{ matrix.os == 'macos-latest' && secrets.MAC_CSC_LINK || '' }}
+          CSC_KEY_PASSWORD: ${{ matrix.os == 'macos-latest' && secrets.MAC_CSC_KEY_PASSWORD || '' }}
+          # Notarization credentials (macOS only, read by @electron/notarize).
+          # Path A — App Store Connect API key. APPLE_API_KEY itself is exported
+          # by the staging step above via GITHUB_ENV, not set here.
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+          # Path B — Apple ID + app-specific password. Used only if no API key
+          # was staged.
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          # Azure Artifact Signing auth (Windows only; unused on mac/linux).
+          # DefaultAzureCredential picks these up automatically.
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+      # A dry run you can't inspect isn't worth much — keep the installers so a
+      # signed build can be pulled down and checked on a real Mac before a tag.
+      - name: Upload installers (non-publishing builds)
+        if: ${{ github.event_name == 'pull_request' || inputs.dry_run }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: installers-${{ matrix.os }}
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            dist/*.exe
+            dist/*.dmg
+            dist/*.AppImage

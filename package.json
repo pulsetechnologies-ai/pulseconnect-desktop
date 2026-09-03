@@ -1,0 +1,73 @@
+{
+  "name": "pulseconnect-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PulseConnect Agent Console desktop app — a standalone Electron shell around the standalone Agent Console web app (control-surface only: presence, call status, agent-assist payment capture).",
+  "author": "Pulse Technologies",
+  "homepage": "https://www.pulsetechnologies.ai",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux"
+  },
+  "devDependencies": {
+    "electron": "^39.8.10",
+    "electron-builder": "^26.15.7"
+  },
+  "build": {
+    "appId": "ai.pulseconnect.desktop",
+    "productName": "PulseConnect",
+    "files": [
+      "main.js",
+      "preload.js",
+      "build/icon.png"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "pulsetechnologies-ai",
+        "repo": "pulseconnect-desktop"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "PulseConnect-Setup.${ext}",
+      "azureSignOptions": {
+        "publisherName": "Pulse Payments LLC",
+        "endpoint": "https://eus.codesigning.azure.net/",
+        "codeSigningAccountName": "pulse-technologies",
+        "certificateProfileName": "pulseconnect-desktop"
+      }
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["universal"]
+        }
+      ],
+      "category": "public.app-category.business",
+      "artifactName": "PulseConnect.${ext}",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Network",
+      "artifactName": "PulseConnect.${ext}"
+    }
+  }
+}
