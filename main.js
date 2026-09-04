@@ -11,7 +11,7 @@
 const { app, BrowserWindow, Tray, Menu, shell, nativeImage } = require('electron');
 const path = require('node:path');
 
-const APP_URL = process.env.PULSECONNECT_APP_URL || 'https://agent.pulseconnect.pulsetechnologies.ai';
+const APP_URL = process.env.PULSECONNECT_APP_URL || 'https://pulseconnect.pulsetechnologies.ai';
 const ICON = path.join(__dirname, 'build', 'icon.png');
 
 let win = null;
