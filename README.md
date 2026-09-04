@@ -24,21 +24,25 @@ that app carries real call audio), and a lighter default window size.
       (`APPLE_API_KEY_B64`, `APPLE_API_KEY_ID`, `APPLE_API_ISSUER`,
       `MAC_CSC_LINK`, `MAC_CSC_KEY_PASSWORD`, `AZURE_TENANT_ID`,
       `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`) live in
-      `pulsevoice-desktop`'s repo settings — this repo needs its own copies
-      added before a signed build will work. Until then CI still builds
-      successfully, just unsigned (same graceful fallback
-      `pulsevoice-desktop` has).
-- [ ] **Windows signing additionally needs a new Azure certificate profile**
-      named `pulseconnect-desktop` created under the existing
-      `pulse-technologies` Azure Artifact Signing account (`win.azureSignOptions.certificateProfileName`
-      in `package.json`) — the Windows signing step will fail until that
-      profile exists, distinct from just copying the repo secrets above.
+      `pulsevoice-desktop`'s repo settings — GitHub secrets can't be read
+      back out even by the repo owner, so these need to be re-entered
+      here from their original source (password manager / Apple Developer
+      portal), not copied. Until then CI still builds successfully, just
+      unsigned (same graceful fallback `pulsevoice-desktop` has).
+- [x] **Windows signing reuses `pulsevoice-desktop`'s existing Azure
+      certificate profile** (`win.azureSignOptions.certificateProfileName`
+      in `package.json` = `"pulsevoice-desktop"`, deliberately not a
+      separate `pulseconnect-desktop` profile) — 2026-09-04 decision: the
+      `pulse-technologies` Trusted Signing account's Basic tier caps
+      Public Trust profiles at 1 (already used), and a 2nd account would
+      need its own fresh identity validation. Both apps publish as the
+      same legal entity (Pulse Payments LLC) either way, so one shared
+      profile is correct, not a workaround — costs nothing and needs no
+      new Azure setup. The `AZURE_*` auth secrets above are this same
+      shared service principal, unrelated to which profile gets signed
+      with.
 - [ ] `build/icon.png` is a placeholder — copied directly from
       `pulsevoice-desktop`, not a real PulseConnect icon.
-- [ ] `PULSECONNECT_APP_URL` in `main.js` points at
-      `https://agent.pulseconnect.pulsetechnologies.ai`, which isn't live
-      yet — Phase B.5's standalone web Agent Console needs its own deploy
-      target before this resolves to anything.
 
 ## Known gotchas (inherited from pulsevoice-desktop, worth carrying over)
 

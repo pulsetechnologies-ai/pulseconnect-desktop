@@ -43,7 +43,7 @@
         "publisherName": "Pulse Payments LLC",
         "endpoint": "https://eus.codesigning.azure.net/",
         "codeSigningAccountName": "pulse-technologies",
-        "certificateProfileName": "pulseconnect-desktop"
+        "certificateProfileName": "pulsevoice-desktop"
       }
     },
     "nsis": {
