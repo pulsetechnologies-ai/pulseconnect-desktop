@@ -36,8 +36,19 @@ jobs:
   release:
     strategy:
       fail-fast: false
+      # macos-15 (Sequoia), NOT macos-latest — GitHub rolled macos-latest to
+      # macOS 26 (Tahoe) on 2026-09-05, mid-way through this repo's own
+      # release history (v0.1.1's build ran on Darwin 25.5.0 and succeeded;
+      # v0.1.2 then failed 4 times in a row on Darwin 25.6.0, all at the
+      # exact same step: `security set-key-partition-list` failing with
+      # "SecKeychainUnlock: ... not correct" — a documented Tahoe regression
+      # in the temp-keychain codesigning flow electron-builder 26.16.0 uses
+      # (unrelated to MAC_CSC_LINK/MAC_CSC_KEY_PASSWORD actually being
+      # wrong — re-generating and re-setting both from scratch didn't fix
+      # it, confirming the certificate/password were never the problem).
+      # Revisit once electron-builder or Apple ships a fix for this.
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [windows-latest, macos-15, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -61,7 +72,7 @@ jobs:
             echo "Staged App Store Connect API key for notarization."
           fi
         env:
-          APPLE_API_KEY_B64: ${{ matrix.os == 'macos-latest' && secrets.APPLE_API_KEY_B64 || '' }}
+          APPLE_API_KEY_B64: ${{ matrix.os == 'macos-15' && secrets.APPLE_API_KEY_B64 || '' }}
 
       - name: Build & publish installer
         # Publishes only on a tag, or on a dispatch with dry_run unticked. PRs
@@ -72,7 +83,7 @@ jobs:
         # NOTE a dry run is the ONLY way to exercise signing before tagging:
         # electron-builder force-skips code signing on pull_request builds, so a
         # green PR proves nothing about the certificate.
-        run: npx electron-builder --publish ${{ (github.event_name == 'pull_request' || inputs.dry_run) && 'never' || 'always' }} ${{ (matrix.os == 'macos-latest' && secrets.MAC_CSC_LINK != '') && '--config.mac.notarize=true' || '' }}
+        run: npx electron-builder --publish ${{ (github.event_name == 'pull_request' || inputs.dry_run) && 'never' || 'always' }} ${{ (matrix.os == 'macos-15' && secrets.MAC_CSC_LINK != '') && '--config.mac.notarize=true' || '' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # macOS signing turns itself on the moment MAC_CSC_LINK exists. Until
@@ -80,11 +91,11 @@ jobs:
           # installer instead of failing. Windows signs explicitly via
           # win.azureSignOptions in package.json (Azure Artifact Signing),
           # which ignores this flag.
-          CSC_IDENTITY_AUTO_DISCOVERY: ${{ matrix.os == 'macos-latest' && secrets.MAC_CSC_LINK != '' }}
+          CSC_IDENTITY_AUTO_DISCOVERY: ${{ matrix.os == 'macos-15' && secrets.MAC_CSC_LINK != '' }}
           # Scoped to macOS on purpose: a bare CSC_LINK would make Windows try
           # to sign with the Apple cert instead of using Azure.
-          CSC_LINK: ${{ matrix.os == 'macos-latest' && secrets.MAC_CSC_LINK || '' }}
-          CSC_KEY_PASSWORD: ${{ matrix.os == 'macos-latest' && secrets.MAC_CSC_KEY_PASSWORD || '' }}
+          CSC_LINK: ${{ matrix.os == 'macos-15' && secrets.MAC_CSC_LINK || '' }}
+          CSC_KEY_PASSWORD: ${{ matrix.os == 'macos-15' && secrets.MAC_CSC_KEY_PASSWORD || '' }}
           # Notarization credentials (macOS only, read by @electron/notarize).
           # Path A — App Store Connect API key. APPLE_API_KEY itself is exported
           # by the staging step above via GITHUB_ENV, not set here.
