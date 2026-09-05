@@ -1,19 +1,18 @@
 # PulseConnect Desktop
 
 A thin Electron shell around PulseConnect's standalone Agent Console web
-app (`apps/web` in [pulse-connect](https://github.com/pulsetechnologies-ai/pulse-connect)).
-Control-surface only — presence, current-call status, agent-assist payment
-capture. No WebRTC/audio in this window; the agent's actual voice call
-stays on their existing PulseVoice softphone or desk phone (see the
-extraction plan's Phase B3 note on why, and Phase E for when that changes).
+app (`apps/web` in [pulse-connect](https://github.com/pulsetechnologies-ai/pulse-connect)):
+presence, current-call status, agent-assist payment capture, and (since
+Phase E) a real WebRTC softphone — an agent can register this window as a
+device and take calls with no PulseVoice relationship at all.
 
 Built by copying [`pulsevoice-desktop`](https://github.com/pulsetechnologies-ai/pulsevoice-desktop)'s
 proven pattern directly (same signing pipeline, same electron-builder
-config shape) rather than reinventing one — see that repo's
-`docs/macos-signing.md` for the full runbook this one follows. The real
-differences from that repo: no mic/camera entitlements (`build/entitlements.mac.plist`),
-no Chromium DNS-SVCB workaround in `main.js` (both exist there only because
-that app carries real call audio), and a lighter default window size.
+config shape, same mic entitlement/DNS-SVCB workaround now that this app
+also carries real call audio) rather than reinventing one — see that
+repo's `docs/macos-signing.md` for the full runbook this one follows. The
+one remaining difference: no camera entitlement, since PulseConnect is
+voice-only (no video).
 
 ## Status
 
@@ -64,6 +63,20 @@ that app carries real call audio), and a lighter default window size.
       browser session before shipping. Local dev is unaffected —
       `PULSECONNECT_APP_URL` still overrides straight to a local server,
       bypassing login entirely.
+- [x] **2026-09-05: Phase E desktop follow-on — real WebRTC audio embedded.**
+      Ported `pulsevoice-desktop`'s proven mic-permission plumbing:
+      `setPermissionRequestHandler` auto-grants `media`/`audioCapture`, the
+      `--disable-features=UseDnsHttpsSvcb,UseDnsHttpsSvcbAlpn` switch (a
+      Chromium DNS bug breaks resolving `stun.telnyx.com` for some hosts),
+      `com.apple.security.device.audio-input` in `entitlements.mac.plist`,
+      and `NSMicrophoneUsageDescription` in `package.json`'s `mac.extendInfo`
+      (no camera entitlement — voice only). Purely additive to the existing
+      shell — `apps/web`'s `page.tsx` already has the device-registration UI
+      from pulse-connect's own Phase E2, so this window gets it
+      automatically since it just loads that hosted page. Verified locally
+      on Windows: a throwaway smoke test confirmed `setPermissionRequestHandler`
+      + `getUserMedia` actually captures a real microphone track inside this
+      exact window config, before trusting it in a signed build.
 
 ## Known gotchas (inherited from pulsevoice-desktop, worth carrying over)
 

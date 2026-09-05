@@ -1,12 +1,20 @@
 // PulseConnect Agent Console desktop (Electron) — a native shell around the
-// standalone Agent Console web app. Control-surface only (presence, call
-// status, agent-assist payment triggers) — no WebRTC/audio in this window,
-// so unlike pulsevoice-desktop this needs neither the mic/camera
-// entitlements nor its Chromium DNS-SVCB workaround (both exist there only
-// because that app carries real call audio). The agent's actual voice call
-// stays on their existing PulseVoice softphone/desk phone. Content is the
-// hosted web app, so it auto-updates with each deploy — no desktop rebuild
-// needed for app changes.
+// standalone Agent Console web app: presence, call status, agent-assist
+// payment triggers, AND (since Phase E) a real WebRTC softphone — an agent
+// can register this window as a device and take calls with no PulseVoice
+// relationship at all. Content is the hosted web app, so it auto-updates
+// with each deploy — no desktop rebuild needed for app changes; today's
+// change is enabling what that page can already do, not adding new UI here.
+
+// Chromium's HTTPS-SVCB DNS path can fail (-105 NAME_NOT_RESOLVED) for some
+// hosts while the OS resolver succeeds — hit on stun/turn.telnyx.com in
+// pulsevoice-desktop, which breaks WebRTC media the same way it would here.
+// Disable it so Electron resolves those hosts like the rest of the system.
+// Must be pushed onto process.argv BEFORE `electron` is required: as of
+// Electron 36, app.commandLine.appendSwitch() lowercases both the switch and
+// its value, and these Chromium feature names are case-sensitive — lowercased,
+// this switch is silently ignored and the DNS bug comes back.
+process.argv.push('--disable-features=UseDnsHttpsSvcb,UseDnsHttpsSvcbAlpn');
 
 const { app, BrowserWindow, Tray, Menu, shell, nativeImage } = require('electron');
 const path = require('node:path');
@@ -52,6 +60,11 @@ function createWindow() {
       contextIsolation: true,
       nodeIntegration: false,
     },
+  });
+
+  // WebRTC calls need the mic (Phase E); auto-grant media, deny everything else.
+  win.webContents.session.setPermissionRequestHandler((_wc, permission, callback) => {
+    callback(permission === 'media' || permission === 'audioCapture');
   });
 
   win.loadURL(APP_URL);

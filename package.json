@@ -1,8 +1,8 @@
 {
   "name": "pulseconnect-desktop",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
-  "description": "PulseConnect Agent Console desktop app — a standalone Electron shell around the standalone Agent Console web app (control-surface only: presence, call status, agent-assist payment capture).",
+  "description": "PulseConnect Agent Console desktop app — a standalone Electron shell around the standalone Agent Console web app: presence, call status, agent-assist payment capture, and a real WebRTC softphone.",
   "author": "Pulse Technologies",
   "homepage": "https://www.pulsetechnologies.ai",
   "main": "main.js",
@@ -62,7 +62,10 @@
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "entitlements": "build/entitlements.mac.plist",
-      "entitlementsInherit": "build/entitlements.mac.plist"
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "PulseConnect uses your microphone for calls."
+      }
     },
     "linux": {
       "target": "AppImage",

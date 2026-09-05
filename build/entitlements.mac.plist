@@ -12,7 +12,11 @@
   <key>com.apple.security.cs.allow-dyld-environment-variables</key>
   <true/>
 
-  <!-- No mic/camera entitlements here (unlike pulsevoice-desktop) — this app
-       carries no WebRTC audio, control-surface only. -->
+  <!-- PulseConnect embeds a real WebRTC softphone (Phase E): the hardened
+       runtime denies mic access unless the entitlement is present, even
+       after the user grants permission in System Settings. Voice only, no
+       video — unlike pulsevoice-desktop this doesn't need the camera one. -->
+  <key>com.apple.security.device.audio-input</key>
+  <true/>
 </dict>
 </plist>
