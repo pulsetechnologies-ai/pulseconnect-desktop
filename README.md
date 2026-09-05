@@ -20,15 +20,17 @@ that app carries real call audio), and a lighter default window size.
 - [x] Repo scaffolded: `main.js`/`preload.js`, `package.json` (electron-builder
       config), `build/entitlements.mac.plist`, `.github/workflows/release.yml`
       (ported from pulsevoice-desktop's CI)
-- [ ] **Not yet configured**: the actual GitHub Actions secrets
-      (`APPLE_API_KEY_B64`, `APPLE_API_KEY_ID`, `APPLE_API_ISSUER`,
-      `MAC_CSC_LINK`, `MAC_CSC_KEY_PASSWORD`, `AZURE_TENANT_ID`,
-      `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`) live in
-      `pulsevoice-desktop`'s repo settings — GitHub secrets can't be read
-      back out even by the repo owner, so these need to be re-entered
-      here from their original source (password manager / Apple Developer
-      portal), not copied. Until then CI still builds successfully, just
-      unsigned (same graceful fallback `pulsevoice-desktop` has).
+- [x] **2026-09-04: all 8 GitHub Actions secrets set** (`APPLE_API_KEY_B64`,
+      `APPLE_API_KEY_ID`, `APPLE_API_ISSUER`, `MAC_CSC_LINK`,
+      `MAC_CSC_KEY_PASSWORD`, `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`,
+      `AZURE_CLIENT_SECRET`) — a dedicated Apple API key and a fresh
+      Developer ID Application certificate (G2 Sub-CA) were generated for
+      this app rather than reusing pulsevoice-desktop's (its original .p12
+      export password was lost, so its cert had to be regenerated from
+      scratch on a rented macOS session). `v0.1.0` shipped signed and
+      notarized on all 3 platforms and is live in
+      [Releases](https://github.com/pulsetechnologies-ai/pulseconnect-desktop/releases) —
+      confirmed via two real dry-run CI passes plus a tagged publish.
 - [x] **Windows signing reuses `pulsevoice-desktop`'s existing Azure
       certificate profile** (`win.azureSignOptions.certificateProfileName`
       in `package.json` = `"pulsevoice-desktop"`, deliberately not a
