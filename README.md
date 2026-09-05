@@ -43,8 +43,12 @@ that app carries real call audio), and a lighter default window size.
       new Azure setup. The `AZURE_*` auth secrets above are this same
       shared service principal, unrelated to which profile gets signed
       with.
-- [ ] `build/icon.png` is a placeholder — copied directly from
-      `pulsevoice-desktop`, not a real PulseConnect icon.
+- [x] **2026-09-05: `build/icon.png` replaced with a real PulseConnect
+      icon** — same visual language as pulsevoice-desktop's (purple
+      gradient background, green rounded-square badge) but a headset
+      glyph instead of a phone handset, matching the icon already used
+      for PulseConnect on the marketing site's nav/product grid. No
+      longer a copy of pulsevoice-desktop's icon.
 
 ## Known gotchas (inherited from pulsevoice-desktop, worth carrying over)
 
