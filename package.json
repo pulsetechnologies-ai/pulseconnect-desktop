@@ -1,6 +1,6 @@
 {
   "name": "pulseconnect-desktop",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "PulseConnect Agent Console desktop app — a standalone Electron shell around the standalone Agent Console web app (control-surface only: presence, call status, agent-assist payment capture).",
   "author": "Pulse Technologies",

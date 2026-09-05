@@ -49,6 +49,21 @@ that app carries real call audio), and a lighter default window size.
       glyph instead of a phone handset, matching the icon already used
       for PulseConnect on the marketing site's nav/product grid. No
       longer a copy of pulsevoice-desktop's icon.
+- [x] **2026-09-05: fixed — every fresh launch landed on "Not signed
+      in."** `main.js` loaded the web app's bare root URL directly
+      (`PULSECONNECT_APP_URL`'s old default). `apps/web`'s `page.tsx`
+      only ever handles a `?token=` in the URL from the SSO handoff; a
+      signed-out visit with no token shows a static "not supported"
+      message and goes nowhere — there was no login form to fall back
+      to. Default now points at the hosted login's deep-link instead,
+      `https://login.pulsetechnologies.ai/?platform=pulseconnect`: shows
+      a real sign-in form if the Electron session has no identity token
+      yet, then auto-mints an SSO launch token and redirects into the
+      app — the same handoff a browser user gets clicking the
+      PulseConnect tile there. Verified live end-to-end in a real
+      browser session before shipping. Local dev is unaffected —
+      `PULSECONNECT_APP_URL` still overrides straight to a local server,
+      bypassing login entirely.
 
 ## Known gotchas (inherited from pulsevoice-desktop, worth carrying over)
 

@@ -11,7 +11,18 @@
 const { app, BrowserWindow, Tray, Menu, shell, nativeImage } = require('electron');
 const path = require('node:path');
 
-const APP_URL = process.env.PULSECONNECT_APP_URL || 'https://pulseconnect.pulsetechnologies.ai';
+// Production default goes through the hosted login's deep-link
+// (/?platform=pulseconnect): shows a sign-in form if the Electron session
+// has no identity token yet, then auto-mints an SSO launch token and
+// redirects into the real app — the same handoff a browser user gets by
+// clicking the PulseConnect tile at login.pulsetechnologies.ai. Loading
+// the app's bare root URL directly (the previous default) has no path
+// for a signed-out visit at all — apps/web's page.tsx only ever handles
+// a `?token=` in the URL, and shows a static "not supported" message
+// otherwise, which is what every fresh desktop launch hit. Local dev
+// overrides this to point straight at a local pulse-connect web server,
+// bypassing login entirely — see README.md.
+const APP_URL = process.env.PULSECONNECT_APP_URL || 'https://login.pulsetechnologies.ai/?platform=pulseconnect';
 const ICON = path.join(__dirname, 'build', 'icon.png');
 
 let win = null;
