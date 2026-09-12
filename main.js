@@ -17,7 +17,7 @@
 // this switch is silently ignored and the DNS bug comes back.
 process.argv.push('--disable-features=UseDnsHttpsSvcb,UseDnsHttpsSvcbAlpn');
 
-const { app, BrowserWindow, Tray, Menu, shell, nativeImage, ipcMain, Notification } = require('electron');
+const { app, BrowserWindow, Tray, Menu, shell, nativeImage, ipcMain, Notification, nativeTheme } = require('electron');
 const path = require('node:path');
 const { autoUpdater } = require('electron-updater');
 
@@ -61,7 +61,7 @@ function createWindow() {
     minWidth: 640,
     minHeight: 520,
     title: 'PulseConnect',
-    backgroundColor: '#391E6D', // Pulse brand purple — matches the app splash
+    backgroundColor: windowBackground(),
     icon: ICON,
     autoHideMenuBar: true,
     // Start hidden when launched at login (the tray icon is the presence);
@@ -85,6 +85,12 @@ function createWindow() {
 
   win.loadURL(APP_URL);
 
+  // Follow an OS light/dark switch while the app is running, so the backdrop
+  // shown during a reload or the login → console hop matches the new theme.
+  nativeTheme.on('updated', () => {
+    if (win && !win.isDestroyed()) win.setBackgroundColor(windowBackground());
+  });
+
   // External links open in the OS browser, not the app shell.
   win.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith('http')) shell.openExternal(url);
@@ -102,6 +108,17 @@ function createWindow() {
   });
 
   createTray();
+}
+
+// The colour the window paints before (and behind) the hosted page. It must
+// match the page's own theme or every launch flashes the wrong colour. The
+// first page is the hosted login, which follows prefers-color-scheme (Electron
+// passes the OS theme through, nativeTheme.themeSource is left at 'system'):
+// measured #0F0C18 dark / #F7F5FC light. The console behind it is slate-900 /
+// slate-50, close enough that the hop is seamless. The old fixed brand purple
+// (#391E6D) matched neither theme.
+function windowBackground() {
+  return nativeTheme.shouldUseDarkColors ? '#0F0C18' : '#F7F5FC';
 }
 
 function showWindow() {
