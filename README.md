@@ -78,6 +78,23 @@ voice-only (no video).
       + `getUserMedia` actually captures a real microphone track inside this
       exact window config, before trusting it in a signed build.
 
+- [x] **2026-09-11 (v0.1.5): the things a browser tab cannot do.**
+      `electron-updater` — checks the GitHub release feed on launch and every
+      6 h, downloads quietly, installs on quit (the `publish` block already
+      wrote `latest*.yml`; nothing read it before). **Start at login** — a
+      tray checkbox (`app.setLoginItemSettings`); a login launch comes up
+      hidden in the tray. **Incoming-call alerts** — `preload.js` now exposes
+      `window.pulseconnectDesktop.incomingCall({from, queue})` /
+      `callEnded()`; the shell brings the window forward, keeps it on top
+      until the call is answered or gone, flashes the taskbar and posts an
+      OS notification. Only pages on `*.pulsetechnologies.ai` are honoured.
+      The web console calls the bridge when present (pulse-connect PR
+      alongside this one) and is unchanged in a browser tab.
+      `backgroundThrottling: false` so a tray-hidden window keeps the
+      softphone's keepalive/reconnect timers running. Lockfile committed
+      (mirrors pulsevoice-desktop) so builds are reproducible and Dependabot
+      has something to read.
+
 ## Known gotchas (inherited from pulsevoice-desktop, worth carrying over)
 
 - Build **universal** on macOS (`arch: universal`, already set) — a

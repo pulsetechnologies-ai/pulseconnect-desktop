@@ -1,8 +1,8 @@
 {
   "name": "pulseconnect-desktop",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
-  "description": "PulseConnect Agent Console desktop app — a standalone Electron shell around the standalone Agent Console web app: presence, call status, agent-assist payment capture, and a real WebRTC softphone.",
+  "description": "PulseConnect Agent Console desktop app \u2014 a standalone Electron shell around the standalone Agent Console web app: presence, call status, agent-assist payment capture, and a real WebRTC softphone.",
   "author": "Pulse Technologies",
   "homepage": "https://www.pulsetechnologies.ai",
   "main": "main.js",
@@ -12,6 +12,9 @@
     "dist:win": "electron-builder --win",
     "dist:mac": "electron-builder --mac",
     "dist:linux": "electron-builder --linux"
+  },
+  "dependencies": {
+    "electron-updater": "^6.6.2"
   },
   "devDependencies": {
     "electron": "^39.8.10",
@@ -54,7 +57,9 @@
       "target": [
         {
           "target": "dmg",
-          "arch": ["universal"]
+          "arch": [
+            "universal"
+          ]
         }
       ],
       "category": "public.app-category.business",
