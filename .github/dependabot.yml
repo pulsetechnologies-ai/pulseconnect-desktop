@@ -1,0 +1,46 @@
+# Dependabot: automated dependency vulnerability alerts and update PRs.
+# Supports PCI DSS 11.3.1 (identification/remediation of vulnerable components)
+# and 6.3.1/6.3.3 (vulnerability identification and patching).
+#
+# Alerts were DISABLED on this repository until 2026-09-11. It shows zero open
+# alerts today, but that was also true of its sibling pulseconnect repos right
+# up until scanning was switched on — pulsevoice-desktop, which has an identical
+# two-dependency shape, carried 14. This file is what opens a PR when that
+# changes here.
+#
+# NOTE: there is no committed lockfile in this repo, so Dependabot resolves from
+# package.json alone and transitive advisories are much harder for it to pin.
+# Committing a package-lock.json would make both this and the released build
+# reproducible — worth doing separately.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    # An Electron major is never a routine bump for a SHIPPED desktop app: it moves
+    # the bundled Chromium and Node underneath it, and the electron-builder release
+    # path has broken on exactly that kind of change before. CI here runs only
+    # release.yml — there is no test that installs and opens the app — so a major
+    # would go green and surface as a broken artefact in someone's hands.
+    #
+    # Minor/patch Electron still flows through the group above, which is where the
+    # security backports land, so this does not weaken the remediation this file
+    # exists for. Same guard as pulsevoice-desktop carries.
+    ignore:
+      - dependency-name: "electron"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "electron-builder"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
