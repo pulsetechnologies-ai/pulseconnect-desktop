@@ -141,6 +141,8 @@ jobs:
 
       # A dry run you can't inspect isn't worth much — keep the installers so a
       # signed build can be pulled down and checked on a real Mac before a tag.
+      # The mac zip and the latest*.yml feeds are kept too, so a dry run proves the
+      # update feed electron-updater will read (latest-mac.yml must list the zip).
       - name: Upload installers (non-publishing builds)
         if: ${{ github.event_name == 'pull_request' || inputs.dry_run }}
         uses: actions/upload-artifact@v7
@@ -151,4 +153,6 @@ jobs:
           path: |
             dist/*.exe
             dist/*.dmg
+            dist/*.zip
             dist/*.AppImage
+            dist/latest*.yml
