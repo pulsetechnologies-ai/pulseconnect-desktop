@@ -181,6 +181,10 @@ ipcMain.on('pulseconnect:call-ended', (event) => {
 // ---- Start at login -------------------------------------------------------
 // A tray toggle; the OS remembers it. The app comes up hidden in the tray on
 // a login launch so the agent's desktop is not covered before they sit down.
+// Hiding is done here, from wasOpenedAtLogin (macOS only), not by the OS: the
+// old `openAsHidden` option only ever worked on macOS 12 and below and was
+// removed in Electron 44. On Windows wasOpenedAtLogin is never set, so a login
+// launch shows the window (unchanged from before).
 
 function launchedAtLogin() {
   try {
@@ -199,7 +203,7 @@ function openAtLogin() {
 }
 
 function setOpenAtLogin(enabled) {
-  app.setLoginItemSettings({ openAtLogin: enabled, openAsHidden: true });
+  app.setLoginItemSettings({ openAtLogin: enabled });
   createTray(); // rebuild the menu so the checkbox reflects the OS's answer
 }
 

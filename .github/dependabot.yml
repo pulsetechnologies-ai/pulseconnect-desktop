@@ -8,10 +8,8 @@
 # two-dependency shape, carried 14. This file is what opens a PR when that
 # changes here.
 #
-# NOTE: there is no committed lockfile in this repo, so Dependabot resolves from
-# package.json alone and transitive advisories are much harder for it to pin.
-# Committing a package-lock.json would make both this and the released build
-# reproducible — worth doing separately.
+# package-lock.json is committed (since v0.1.5, #5), so Dependabot and the
+# released builds resolve the same transitive versions.
 version: 2
 updates:
   - package-ecosystem: npm
