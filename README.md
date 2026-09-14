@@ -102,6 +102,10 @@ voice-only (no video).
       in Electron 44; it only ever worked on macOS 12 and below). Hiding on a login
       launch still comes from `wasOpenedAtLogin`, which is macOS-only. **Requires
       macOS 13 or later** from this version on.
+- [x] **2026-09-14 (v0.1.8): macOS auto-update.** The mac target builds a universal
+      `.zip` next to the DMG, so Mac installs now update themselves. Earlier Mac
+      installs never did (the updater has no DMG path), so v0.1.7 and older Macs
+      pick up v0.1.8 on their next check.
 
 ## Known gotchas (inherited from pulsevoice-desktop, worth carrying over)
 
@@ -110,12 +114,14 @@ voice-only (no video).
 - electron-builder publishes releases as a **draft by default** — a
   tagged CI run still needs a manual "Publish release" click on GitHub.
 - `build.publish.owner` must point at `pulsetechnologies-ai` (already set).
-- **macOS installs do not auto-update.** electron-updater's Mac updater needs a
-  `.zip` artifact (`ERR_UPDATER_ZIP_FILE_NOT_FOUND` otherwise) and the mac target
-  builds only a DMG, so `latest-mac.yml` lists `PulseConnect.dmg` alone. Windows
-  and Linux do auto-update. Adding a `zip` target would fix it, but electron-builder
-  does not write `minimumSystemVersion` into `latest-mac.yml`, so a macOS 12
-  machine would then download builds it cannot run. Add that field by hand first.
+- **Every release: add `minimumSystemVersion: 22.0.0` to the draft's
+  `latest-mac.yml` before publishing.** Since v0.1.8 the mac target also builds a
+  universal `.zip`, which electron-updater's Mac updater needs, so macOS installs
+  auto-update like Windows and Linux. electron-builder does not write
+  `minimumSystemVersion`, and electron-updater compares it with `os.release()`,
+  which on macOS is the **Darwin** version (macOS 13 = Darwin 22). Without the field,
+  or with `13.0.0`, a macOS 12 machine would install a build it cannot run. Edit the
+  downloaded file, then `gh release upload vX latest-mac.yml --clobber`.
 - **Notifications on macOS need a signed build** (Electron 42+ uses `UNNotification`).
   Unsigned PR artifacts show no incoming-call notification on a Mac; dry-run and
   tag builds are signed.
