@@ -95,6 +95,14 @@ voice-only (no video).
       (mirrors pulsevoice-desktop) so builds are reproducible and Dependabot
       has something to read.
 
+- [x] **2026-09-14 (v0.1.7): Electron 39 → 44.3.0.** Electron 39 stopped getting
+      security fixes on 2026-05-05 (issue #10). Chromium 152 / Node 24. The
+      `UseDnsHttpsSvcb` feature name still exists in Chromium 152, so the WebRTC DNS
+      workaround holds. `openAsHidden` was removed from `setLoginItemSettings` (gone
+      in Electron 44; it only ever worked on macOS 12 and below). Hiding on a login
+      launch still comes from `wasOpenedAtLogin`, which is macOS-only. **Requires
+      macOS 13 or later** from this version on.
+
 ## Known gotchas (inherited from pulsevoice-desktop, worth carrying over)
 
 - Build **universal** on macOS (`arch: universal`, already set) — a
@@ -102,6 +110,15 @@ voice-only (no video).
 - electron-builder publishes releases as a **draft by default** — a
   tagged CI run still needs a manual "Publish release" click on GitHub.
 - `build.publish.owner` must point at `pulsetechnologies-ai` (already set).
+- **macOS installs do not auto-update.** electron-updater's Mac updater needs a
+  `.zip` artifact (`ERR_UPDATER_ZIP_FILE_NOT_FOUND` otherwise) and the mac target
+  builds only a DMG, so `latest-mac.yml` lists `PulseConnect.dmg` alone. Windows
+  and Linux do auto-update. Adding a `zip` target would fix it, but electron-builder
+  does not write `minimumSystemVersion` into `latest-mac.yml`, so a macOS 12
+  machine would then download builds it cannot run. Add that field by hand first.
+- **Notifications on macOS need a signed build** (Electron 42+ uses `UNNotification`).
+  Unsigned PR artifacts show no incoming-call notification on a Mac; dry-run and
+  tag builds are signed.
 
 ## Local dev
 
@@ -109,3 +126,6 @@ voice-only (no video).
 npm install
 PULSECONNECT_APP_URL=http://localhost:3100 npm start
 ```
+
+Since Electron 42 the `electron` package no longer downloads its binary in
+`postinstall`; the first `npm start` downloads it, then it is cached.
