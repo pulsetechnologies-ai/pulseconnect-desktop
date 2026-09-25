@@ -48,6 +48,14 @@ voice-only (no video).
       glyph instead of a phone handset, matching the icon already used
       for PulseConnect on the marketing site's nav/product grid. No
       longer a copy of pulsevoice-desktop's icon.
+- [x] **2026-09-25: `build/icon.png` replaced with the new PulseConnect
+      logo** ("option C": a chat bubble wearing a headset over a pulse
+      line, green on the Pulse purple tile) — the same mark as the
+      partner-portal icon and the web app favicon. Rendered from
+      `Marketing/Branding/Logos/pulseconnect-icon.svg` at 4096px and
+      Lanczos-downscaled to 1024x1024; electron-builder still derives the
+      Windows `.ico` and macOS `.icns` from this one PNG, and `main.js`
+      still uses it for the window, notifications and the 18px tray icon.
 - [x] **2026-09-05: fixed — every fresh launch landed on "Not signed
       in."** `main.js` loaded the web app's bare root URL directly
       (`PULSECONNECT_APP_URL`'s old default). `apps/web`'s `page.tsx`
