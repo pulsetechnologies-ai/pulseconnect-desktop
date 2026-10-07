@@ -1,0 +1,13 @@
+{
+  "tray": {
+    "open": "Mở PulseConnect",
+    "startAtLogin": "Khởi động khi đăng nhập",
+    "checkForUpdates": "Kiểm tra cập nhật",
+    "version": "Phiên bản {{version}}",
+    "quit": "Thoát"
+  },
+  "call": {
+    "incoming": "Cuộc gọi đến",
+    "unknownCaller": "Người gọi không xác định"
+  }
+}

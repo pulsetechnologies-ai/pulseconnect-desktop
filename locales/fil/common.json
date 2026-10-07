@@ -1,0 +1,13 @@
+{
+  "tray": {
+    "open": "Buksan ang PulseConnect",
+    "startAtLogin": "Magsimula sa pag-login",
+    "checkForUpdates": "Tingnan kung may update",
+    "version": "Bersyon {{version}}",
+    "quit": "Umalis"
+  },
+  "call": {
+    "incoming": "Papasok na tawag",
+    "unknownCaller": "Hindi kilalang tumatawag"
+  }
+}

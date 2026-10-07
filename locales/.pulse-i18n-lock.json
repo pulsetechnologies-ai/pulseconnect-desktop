@@ -1,0 +1,396 @@
+{
+  "version": 1,
+  "locales": {
+    "ar": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "bn": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "de": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "es": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "fil": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "fr": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "hi": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "ht": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "id": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "ja": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "ko": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "pt-BR": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "ru": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "ur": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "vi": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "zh-Hans": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    },
+    "zh-Hant": {
+      "common:call.incoming": {
+        "src": "a31650d8480673f5"
+      },
+      "common:call.unknownCaller": {
+        "src": "0f6218c0c51be73e"
+      },
+      "common:tray.checkForUpdates": {
+        "src": "f26f3275e735bdf6"
+      },
+      "common:tray.open": {
+        "src": "12cef050fea4fba3"
+      },
+      "common:tray.quit": {
+        "src": "b3eb37acb66ba4bb"
+      },
+      "common:tray.startAtLogin": {
+        "src": "85010ecd9a169aa0"
+      },
+      "common:tray.version": {
+        "src": "c6b6b4b58937ac03"
+      }
+    }
+  }
+}

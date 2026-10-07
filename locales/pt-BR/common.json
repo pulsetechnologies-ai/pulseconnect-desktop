@@ -1,0 +1,13 @@
+{
+  "tray": {
+    "open": "Abrir o PulseConnect",
+    "startAtLogin": "Iniciar com o login",
+    "checkForUpdates": "Verificar atualizações",
+    "version": "Versão {{version}}",
+    "quit": "Sair"
+  },
+  "call": {
+    "incoming": "Chamada recebida",
+    "unknownCaller": "Chamador desconhecido"
+  }
+}

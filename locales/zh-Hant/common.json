@@ -1,0 +1,13 @@
+{
+  "tray": {
+    "open": "開啟 PulseConnect",
+    "startAtLogin": "登入時啟動",
+    "checkForUpdates": "檢查更新",
+    "version": "版本 {{version}}",
+    "quit": "結束"
+  },
+  "call": {
+    "incoming": "來電",
+    "unknownCaller": "未知來電者"
+  }
+}
