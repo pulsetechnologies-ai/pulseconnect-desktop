@@ -1,0 +1,13 @@
+{
+  "tray": {
+    "open": "PulseConnect 열기",
+    "startAtLogin": "로그인 시 시작",
+    "checkForUpdates": "업데이트 확인",
+    "version": "버전 {{version}}",
+    "quit": "종료"
+  },
+  "call": {
+    "incoming": "수신 전화",
+    "unknownCaller": "알 수 없는 발신자"
+  }
+}

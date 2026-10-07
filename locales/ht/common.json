@@ -1,0 +1,13 @@
+{
+  "tray": {
+    "open": "Louvri PulseConnect",
+    "startAtLogin": "Demare lè w konekte",
+    "checkForUpdates": "Verifye si gen mizajou",
+    "version": "Vèsyon {{version}}",
+    "quit": "Soti"
+  },
+  "call": {
+    "incoming": "Apèl ap rantre",
+    "unknownCaller": "Moun k ap rele a pa konnen"
+  }
+}

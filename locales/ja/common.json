@@ -1,0 +1,13 @@
+{
+  "tray": {
+    "open": "PulseConnectを開く",
+    "startAtLogin": "ログイン時に起動",
+    "checkForUpdates": "アップデートを確認",
+    "version": "バージョン {{version}}",
+    "quit": "終了"
+  },
+  "call": {
+    "incoming": "着信中",
+    "unknownCaller": "不明な発信者"
+  }
+}

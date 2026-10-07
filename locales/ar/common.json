@@ -1,0 +1,13 @@
+{
+  "tray": {
+    "open": "فتح PulseConnect",
+    "startAtLogin": "التشغيل عند تسجيل الدخول",
+    "checkForUpdates": "التحقق من وجود تحديثات",
+    "version": "الإصدار {{version}}",
+    "quit": "إنهاء"
+  },
+  "call": {
+    "incoming": "مكالمة واردة",
+    "unknownCaller": "متصل غير معروف"
+  }
+}

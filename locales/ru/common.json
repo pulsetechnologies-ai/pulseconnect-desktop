@@ -1,0 +1,13 @@
+{
+  "tray": {
+    "open": "Открыть PulseConnect",
+    "startAtLogin": "Запускать при входе в систему",
+    "checkForUpdates": "Проверить обновления",
+    "version": "Версия {{version}}",
+    "quit": "Выход"
+  },
+  "call": {
+    "incoming": "Входящий звонок",
+    "unknownCaller": "Неизвестный абонент"
+  }
+}

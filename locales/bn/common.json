@@ -1,0 +1,13 @@
+{
+  "tray": {
+    "open": "PulseConnect খুলুন",
+    "startAtLogin": "লগইনের সময় চালু করুন",
+    "checkForUpdates": "আপডেট পরীক্ষা করুন",
+    "version": "সংস্করণ {{version}}",
+    "quit": "প্রস্থান করুন"
+  },
+  "call": {
+    "incoming": "ইনকামিং কল",
+    "unknownCaller": "অজ্ঞাত কলার"
+  }
+}

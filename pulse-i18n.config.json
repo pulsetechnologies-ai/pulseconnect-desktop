@@ -1,0 +1,9 @@
+{
+  "dir": "locales",
+  "glossary": [
+    "Pulse",
+    "PulseConnect",
+    "Pulse Technologies"
+  ],
+  "context": "The PulseConnect desktop app for Windows, macOS and Linux (a contact-center agent console that stays in the system tray and alerts the agent to incoming calls). These are the few words of the app's own shell: the tray menu and the incoming-call notification. Short, plain, polite. The program inserts {{placeholders}} (a version number) and they must be kept exactly as written, character for character; never translate what is inside {{ }}. 'Pulse' and 'PulseConnect' are product names and are never translated. Use the formal form of address where the language has one."
+}

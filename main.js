@@ -20,6 +20,7 @@ process.argv.push('--disable-features=UseDnsHttpsSvcb,UseDnsHttpsSvcbAlpn');
 const { app, BrowserWindow, Tray, Menu, shell, nativeImage, ipcMain, Notification, nativeTheme } = require('electron');
 const path = require('node:path');
 const { autoUpdater } = require('electron-updater');
+const i18n = require('./i18n');
 
 // Production default goes through the hosted login's deep-link
 // (/?platform=pulseconnect): shows a sign-in form if the Electron session
@@ -107,6 +108,10 @@ function createWindow() {
     }
   });
 
+  // Follow the language chosen in the app (its pulse_lang cookie) for the tray menu and call alerts.
+  i18n.start(win.webContents.session);
+  i18n.onChange(createTray);
+
   createTray();
 }
 
@@ -147,7 +152,7 @@ function trustedSender(event) {
 let alertOnTop = false;
 function callAlert(info) {
   if (!win) return;
-  const from = info && typeof info.from === 'string' && info.from.trim() ? info.from.trim() : 'Unknown caller';
+  const from = info && typeof info.from === 'string' && info.from.trim() ? info.from.trim() : i18n.t('call.unknownCaller');
   const queue = info && typeof info.queue === 'string' && info.queue.trim() ? ` · ${info.queue.trim()}` : '';
   showWindow();
   win.flashFrame(true);
@@ -156,7 +161,7 @@ function callAlert(info) {
     win.setAlwaysOnTop(true, 'floating');
   }
   if (Notification.isSupported()) {
-    const n = new Notification({ title: 'Incoming call', body: `${from}${queue}`, icon: ICON, silent: true });
+    const n = new Notification({ title: i18n.t('call.incoming'), body: `${from}${queue}`, icon: ICON, silent: true });
     n.on('click', showWindow);
     n.show();
   }
@@ -232,17 +237,17 @@ function createTray() {
   }
   tray.setContextMenu(
     Menu.buildFromTemplate([
-      { label: 'Open PulseConnect', click: showWindow },
+      { label: i18n.t('tray.open'), click: showWindow },
       { type: 'separator' },
-      { label: 'Start at login', type: 'checkbox', checked: openAtLogin(), click: (item) => setOpenAtLogin(item.checked) },
+      { label: i18n.t('tray.startAtLogin'), type: 'checkbox', checked: openAtLogin(), click: (item) => setOpenAtLogin(item.checked) },
       {
-        label: 'Check for updates',
+        label: i18n.t('tray.checkForUpdates'),
         enabled: app.isPackaged,
         click: () => autoUpdater.checkForUpdatesAndNotify().catch((err) => console.error('[updater]', err && err.message ? err.message : err)),
       },
       { type: 'separator' },
-      { label: `Version ${app.getVersion()}`, enabled: false },
-      { label: 'Quit', click: () => { quitting = true; app.quit(); } },
+      { label: i18n.t('tray.version', { version: app.getVersion() }), enabled: false },
+      { label: i18n.t('tray.quit'), click: () => { quitting = true; app.quit(); } },
     ]),
   );
 }

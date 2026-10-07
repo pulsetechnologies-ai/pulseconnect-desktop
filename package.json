@@ -14,11 +14,13 @@
     "dist:linux": "electron-builder --linux"
   },
   "dependencies": {
+    "@pulsetechnologies/i18n": "0.8.1",
     "electron-updater": "^6.6.2"
   },
   "devDependencies": {
     "electron": "^44.5.1",
-    "electron-builder": "^26.17.0"
+    "electron-builder": "^26.17.0",
+    "@anthropic-ai/sdk": "^0.131.0"
   },
   "build": {
     "appId": "ai.pulseconnect.desktop",
@@ -26,6 +28,8 @@
     "files": [
       "main.js",
       "preload.js",
+      "i18n.js",
+      "locales/*/common.json",
       "build/icon.png"
     ],
     "directories": {

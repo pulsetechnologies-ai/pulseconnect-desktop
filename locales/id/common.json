@@ -1,0 +1,13 @@
+{
+  "tray": {
+    "open": "Buka PulseConnect",
+    "startAtLogin": "Mulai saat login",
+    "checkForUpdates": "Periksa pembaruan",
+    "version": "Versi {{version}}",
+    "quit": "Keluar"
+  },
+  "call": {
+    "incoming": "Panggilan masuk",
+    "unknownCaller": "Penelepon tidak dikenal"
+  }
+}
