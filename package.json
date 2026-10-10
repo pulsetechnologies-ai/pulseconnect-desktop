@@ -18,9 +18,9 @@
     "electron-updater": "^6.6.2"
   },
   "devDependencies": {
-    "electron": "^44.5.1",
+    "electron": "^44.7.0",
     "electron-builder": "^26.17.0",
-    "@anthropic-ai/sdk": "^0.131.0"
+    "@anthropic-ai/sdk": "^0.132.0"
   },
   "build": {
     "appId": "ai.pulseconnect.desktop",
