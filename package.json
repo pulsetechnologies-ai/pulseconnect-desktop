@@ -14,12 +14,12 @@
     "dist:linux": "electron-builder --linux"
   },
   "dependencies": {
-    "@pulsetechnologies/i18n": "0.8.1",
-    "electron-updater": "^6.6.2"
+    "@pulsetechnologies/i18n": "0.9.0",
+    "electron-updater": "^6.8.11"
   },
   "devDependencies": {
-    "electron": "^44.7.0",
-    "electron-builder": "^26.17.0",
+    "electron": "^44.9.3",
+    "electron-builder": "^26.18.0",
     "@anthropic-ai/sdk": "^0.132.0"
   },
   "build": {
